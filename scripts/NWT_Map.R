@@ -77,10 +77,25 @@ ggplot()+
   geom_sf(data = veg_class_map, aes(fill = TYPE))+
   theme_classic()+
   theme(legend.position = "none")+
-  geom_point(data = design_coords, aes(X, Y))
+  geom_point(data = design_coords[1:50,], aes(X, Y))
 
-#write.csv(design_coords, "survey_points.csv")
+#write.csv(design_coords, "survey_points_32613.csv")
 design_coords
+
+# bring in site coords created before and turn into lat-long
+lat_long <- read.csv("survey_points_32613.csv")
+colnames(lat_long) <- c("id", "X", "Y")
+
+lat_long <- st_as_sf(lat_long, coords = c("X", "Y"), crs = 32613, remove = F)
+mapview(lat_long, zcol = "id")
+
+lat_long <- st_transform(lat_long, crs = 4326)
+mapview(lat_long, zcol = "id")
+lat_long
+plot(density(st_distance(lat_long$geometry)))
+
+st_write(lat_long, dsn = "survey_points_latlong.csv")
+
 
 # 
 # # set seed
