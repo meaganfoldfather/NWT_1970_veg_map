@@ -84,22 +84,22 @@ design_coords
 
 # bring in site coords created before and turn into lat-long
 lat_long <- read.csv("survey_points_32613.csv")
-colnames(lat_long) <- c("id", "X", "Y")
+colnames(lat_long) <- c("name", "X", "Y")
 
 lat_long <- st_as_sf(lat_long, coords = c("X", "Y"), crs = 32613, remove = F)
-mapview(lat_long, zcol = "id")
+mapview(lat_long, zcol = "name")
 
 lat_long <- st_transform(lat_long, crs = 4326)
-mapview(lat_long, zcol = "id")
+mapview(lat_long, zcol = "name")
 lat_long
 
 # distance between survey pts
 plot(density(st_distance(lat_long$geometry)))
 
-#st_write(lat_long[1:500,], dsn = "survey_points_latlong_1.kml")
-#st_write(lat_long[501:1000,], dsn = "survey_points_latlong_2.kml")
+st_write(lat_long[1:500,], dsn = "survey_points_latlong_1.kml", delete_dsn = T)
+st_write(lat_long[501:1000,], dsn = "survey_points_latlong_2.kml", delete_dsn = T)
 
-# 
+
 # # set seed
 # seed <- sample(x = 100000000, size = 1)
 # set.seed(seed)
