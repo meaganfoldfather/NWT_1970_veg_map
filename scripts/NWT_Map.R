@@ -92,10 +92,12 @@ mapview(lat_long, zcol = "id")
 lat_long <- st_transform(lat_long, crs = 4326)
 mapview(lat_long, zcol = "id")
 lat_long
+
+# distance between survey pts
 plot(density(st_distance(lat_long$geometry)))
 
-st_write(lat_long, dsn = "survey_points_latlong.csv")
-
+#st_write(lat_long[1:500,], dsn = "survey_points_latlong_1.kml")
+#st_write(lat_long[501:1000,], dsn = "survey_points_latlong_2.kml")
 
 # 
 # # set seed
