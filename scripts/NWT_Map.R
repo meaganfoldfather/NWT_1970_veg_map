@@ -72,12 +72,17 @@ design_df
 design_coords <- as.data.frame(coordinates(design_df))
 design_coords
 
+
+
+plot_pts <- read.csv("survey_points_32613.csv")
+plot_pts
+
 #plot map
 ggplot()+
   geom_sf(data = veg_class_map, aes(fill = TYPE))+
   theme_classic()+
   theme(legend.position = "none")+
-  geom_point(data = design_coords[1:50,], aes(X, Y))
+  geom_point(data = plot_pts, aes(X, Y))
 
 #write.csv(design_coords, "survey_points_32613.csv")
 design_coords
